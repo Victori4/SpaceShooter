@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace SpaceShooter
 {
@@ -8,6 +9,11 @@ namespace SpaceShooter
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+
+        public static Random Random;
+
+        public static int ScreenWidth = 1200;
+        public static int ScreenHeight = 720;
 
         public Game1()
         {
@@ -19,6 +25,14 @@ namespace SpaceShooter
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            Random = new Random();
+
+            // assign W and H to window itself
+            _graphics.PreferredBackBufferWidth = ScreenWidth;
+            _graphics.PreferredBackBufferHeight = ScreenHeight;
+            _graphics.ApplyChanges();
+
+            IsMouseVisible = true;
 
             base.Initialize();
         }
