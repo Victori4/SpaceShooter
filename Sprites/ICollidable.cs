@@ -4,7 +4,9 @@ using System.Text;
 
 namespace SpaceShooter.Sprites
 {
-    class ICollidable
+    public interface ICollidable
     {
+        // method saying sprites can only collide with sprites
+        void OnCollide(Sprite sprite);
     }
 }
