@@ -12,6 +12,7 @@ namespace SpaceShooter.States
         protected Game1 _game;
 
         protected ContentManager _content;
+
         // constructor
         public State(Game1 game, ContentManager content)
         {

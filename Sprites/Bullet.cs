@@ -32,6 +32,28 @@ namespace SpaceShooter.Sprites
 
         public void OnCollide(Sprite sprite)
         {
+
+            // possible switch case taken for future ref from:
+            // https://github.com/Oyyou/MonoGame_Tutorials/blob/master/MonoGame_Tutorials/Tutorial020/Sprites/Bullet.cs
+
+            //switch (sprite)
+            //{
+            //  case Bullet b:
+            //    return;
+            //  case Enemy e1 when e1.Parent is Enemy:
+
+            //    if (e1.Parent is Enemy)
+            //      return;
+
+            //    if()
+
+            //    return;
+            //  case Enemy e2 when 
+
+            //  case Player p when (p.IsDead || p.Parent is Player):
+            //    return;
+            //}
+
             // Check that bullets do not collide with each other
             if (sprite is Bullet)
                 return;

@@ -36,13 +36,12 @@ namespace SpaceShooter
             _graphics.PreferredBackBufferHeight = ScreenHeight;
             _graphics.ApplyChanges();
 
-            IsMouseVisible = true;
-
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
+            // Create a new SpriteBatch, used to draw textures
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             //assign current state to menu state
             // pass this this (game) and content

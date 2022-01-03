@@ -26,9 +26,7 @@ namespace SpaceShooter.Sprites
             // if we have 3 frames, 3 * 0.2 = 0.6f, meaning explosion will be removed after 0.6sec
             if (_timer > _animationManager.CurrentAnimation.FrameCount * _animationManager.CurrentAnimation.FrameSpeed)
                 IsRemoved = true;
-            
 
-          
         }
     }
 }
