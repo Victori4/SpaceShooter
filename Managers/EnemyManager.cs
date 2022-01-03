@@ -48,7 +48,7 @@ namespace SpaceShooter.Content.Managers
             if(_timer > SpawnTimer)
             {
                 CanAdd = true;
-                _timer = 0f;                 
+                _timer = 0;                 
             }
         }
         // creates enemy and return to list later

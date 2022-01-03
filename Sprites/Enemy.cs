@@ -19,7 +19,7 @@ namespace SpaceShooter.Sprites
         {
             _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if(_timer <= ShootTimer)
+            if(_timer >= ShootTimer)
             {
                 Shoot(-5f);
                 _timer = 0;
