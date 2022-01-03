@@ -6,9 +6,11 @@ using System.Text;
 
 namespace SpaceShooter.Sprites
 {
-    public class Bullet : Sprite, ICol2272  2 2144 2412lidable
+    public class Bullet : Sprite, ICollidable
     {
         private float _timer;
+        //prefab
+        public Explosion Explosion;
         public float LifeSpan { get; set; }
         public Vector2 Velocity { get; set; }
 
@@ -30,7 +32,49 @@ namespace SpaceShooter.Sprites
 
         public void OnCollide(Sprite sprite)
         {
-            throw new NotImplementedException();
+            // Check that bullets do not collide with each other
+            if (sprite is Bullet)
+                return;
+
+            // Check that enemies cannot shoot each other
+            if (sprite is Enemy && this.Parent is Enemy)
+                return;
+
+            // Check that playeres cannot shoot each other
+            if (sprite is Player && this.Parent is Player)
+                return;
+            // Check that dead players cannot be hit
+            // sprite needs to be cast as player
+            if (sprite is Player && ((Player)sprite).IsDead)
+                return;
+
+            // if obj hitting is enemy and shooter is player, remove bullet, add explosion
+            if(sprite is Enemy && this.Parent is Player)
+            {
+                IsRemoved = true;
+                AddExplosion();
+            }
+
+            // if enemy bullet hits a player, remove and explosion
+            if(sprite is Player && this.Parent is Enemy)
+            {
+                IsRemoved = true;
+                AddExplosion();
+            }
+        }
+
+        public void AddExplosion()
+        {
+            // bullets do not necessarily explode
+            if (Explosion == null)
+                return;
+
+            // create clone of explosion as new obj and set position to that of bullet
+            var explosion = Explosion.Clone() as Explosion;
+            explosion.Position = this.Position;
+            // add to list of children, added to list of sprites at end to be drawn
+            Children.Add(explosion);
+
         }
     }
 }
