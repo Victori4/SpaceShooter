@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using SpaceShooter.States;
 using System;
 
 namespace SpaceShooter
@@ -14,6 +15,9 @@ namespace SpaceShooter
 
         public static int ScreenWidth = 1200;
         public static int ScreenHeight = 720;
+
+        private State _currentState;
+        private State _nextState;
 
         public Game1()
         {
@@ -40,25 +44,42 @@ namespace SpaceShooter
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            //assign current state to menu state
+            // pass this this (game) and content
+            _currentState = new MenuState(this, Content);
+            _currentState.LoadContent();
 
-            // TODO: use this.Content to load your game content here
+            _nextState = null;
         }
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            // check if next state is not null
+            // change state
+            if(_nextState != null)
+            {
+                _currentState = _nextState;
+                _currentState.LoadContent();
 
-            // TODO: Add your update logic here
+                _nextState = null;
+            }
+
+            _currentState.Update(gameTime);
+            _currentState.PostUpdate(gameTime);
 
             base.Update(gameTime);
+        }
+
+        public void ChangeState(State state)
+        {
+            _nextState = state;
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            _currentState.Draw(gameTime, _spriteBatch);
 
             base.Draw(gameTime);
         }
