@@ -10,6 +10,11 @@ namespace SpaceShooter.Sprites
 {
     public class Player : Ship
     {
+
+        private KeyboardState _currentKey;
+
+        private KeyboardState _previousKey;
+
         // how often we can shoot
         private float _shootTimer = 0;
 
@@ -22,9 +27,10 @@ namespace SpaceShooter.Sprites
             }
         }
 
-        public Input Input;
+        public Input Input { get; set; }
 
-        public Score Score;
+        public Score Score { get; set; }
+
         public Player(Texture2D texture) : base(texture)
         {
             Speed = 3f;
@@ -36,29 +42,32 @@ namespace SpaceShooter.Sprites
             if (IsDead)
                 return;
 
+            _previousKey = _currentKey;
+            _currentKey = Keyboard.GetState();
+
             var velocity = Vector2.Zero;
             _rotation = 0;
 
             // check if up is pressed, if so assign Y velo to -speed
             // and tilt up a bit
-            if(Keyboard.GetState().IsKeyDown(Input.Up))
+            if(_currentKey.IsKeyDown(Input.Up))
             {
                 velocity.Y -= Speed;
                 _rotation = MathHelper.ToRadians(-15);
             }
 
-            else if (Keyboard.GetState().IsKeyDown(Input.Down))
+            else if (_currentKey.IsKeyDown(Input.Down))
             {
                 velocity.Y += Speed;
                 _rotation = MathHelper.ToRadians(15);
             }
 
-            if (Keyboard.GetState().IsKeyDown(Input.Left))
+            if (_currentKey.IsKeyDown(Input.Left))
             {
                 velocity.X -= Speed;
             }
 
-            else if (Keyboard.GetState().IsKeyDown(Input.Right))
+            else if (_currentKey.IsKeyDown(Input.Right))
             {
                 velocity.X += Speed;
             }
@@ -67,13 +76,14 @@ namespace SpaceShooter.Sprites
 
             // check to see if pressing shoot key and it's been more than 1/4 of sec
             // this means we can keep holding space bar down and it will keep shooting but not too fast
-            if(Keyboard.GetState().IsKeyDown(Input.Shoot) && _shootTimer>0.25f )
+            if(_currentKey.IsKeyDown(Input.Shoot) && _shootTimer > 0.25f )
             {
                 Shoot(Speed * 2);
                 _shootTimer = 0f;
             }
 
             Position += velocity;
+
             // clamp position bw 2 points
             // ship should move bw rectangle area of screen, do not go off screen
             // 80 on L, 0 at top, quarter to R and all the way to bottom
@@ -94,8 +104,9 @@ namespace SpaceShooter.Sprites
                 return;
 
             // if sprite colloding a bullet from enemy, minus 1 health
-            if (sprite is Bullet && sprite.Parent is Enemy)
+            if (sprite is Bullet && ((Bullet)sprite).Parent is Enemy)
                 Health--;
+
             // if colloding with enemy, lose 3 health
             if (sprite is Enemy)
                 Health -= 3;

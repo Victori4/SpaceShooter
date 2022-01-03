@@ -12,6 +12,7 @@ namespace SpaceShooter.Content.Managers
     {
         // how long been going for
         private float _timer;
+
         // potential textures for ship
         private List<Texture2D> _textures;
         
@@ -20,6 +21,7 @@ namespace SpaceShooter.Content.Managers
         public Bullet Bullet { get; set;}
 
         public int MaxEnemies { get; set; }
+
         // how often something spawns
         public float SpawnTimer { get; set; }
 
@@ -41,6 +43,7 @@ namespace SpaceShooter.Content.Managers
         {
             // increment timer to total seconds and set CanAdd to F
             _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            
             CanAdd = false;
 
             // check _timer to see if more than SpawnTimer

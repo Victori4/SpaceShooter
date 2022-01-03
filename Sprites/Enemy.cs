@@ -9,7 +9,9 @@ namespace SpaceShooter.Sprites
     public class Enemy : Ship
     {
         private float _timer;
+
         public float ShootTimer = 1.75f;
+
         public Enemy(Texture2D texture) : base(texture)
         {
             Speed = 2f;
@@ -24,6 +26,7 @@ namespace SpaceShooter.Sprites
                 Shoot(-5f);
                 _timer = 0;
             }
+           
             // moves on L
             Position += new Vector2(-Speed, 0);
 
@@ -45,14 +48,13 @@ namespace SpaceShooter.Sprites
             // if sprite that collides is bullet and comes from player
             // -1 health from enemy and if enemy health 0 or below, remove
             // player gets 1 pt
-            if(sprite is Bullet && sprite.Parent is Player)
+            if (sprite is Bullet && ((Bullet)sprite).Parent is Player)
             {
                 Health--;
 
-                if(Health <= 0)
+                if (Health <= 0)
                 {
                     IsRemoved = true;
-
                     ((Player)sprite.Parent).Score.Value++;
                 }
             }
